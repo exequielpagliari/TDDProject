@@ -7,7 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "DamageZone.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class TDDPROYECT_API ADamageZone : public AActor
 {
 	GENERATED_BODY()
@@ -17,8 +17,10 @@ public:
 	ADamageZone();
 	ADamageZone(int Damage);
 	ADamageZone(int Damage, int TimeDamage);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	int DamageValue;
 	int GetDamageValue() const { return DamageValue; }
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	int TimeDamageValue;
 	int GetTimeDamageValue() const { return TimeDamageValue; }
 	void SetDamageValue(int Damage) { DamageValue = FMath::Clamp(Damage, 0, Damage);}

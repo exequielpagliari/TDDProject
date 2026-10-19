@@ -9,6 +9,10 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "HealthComponent.h"
+#include "CoreUObject.h"
+#include "UObject/Class.h"
+#include "UObject/UnrealType.h"
+#include "EdGraphSchema_K2.h"
 
 // Definimos el spec del actor test
 BEGIN_DEFINE_SPEC(FDamageZoneSpec, "TDDProyect.Actors.DamageZone", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::EditorContext | EAutomationTestFlags::ClientContext)
@@ -121,4 +125,51 @@ void FDamageZoneSpec::Define()
                     }
                 });
         });
+
+    Describe("Blueprint Compatibility and Properties", [this]()
+    {
+        It("Should be Blueprintable and BlueprintType", [this]()
+        {
+            UClass* Class = ADamageZone::StaticClass();
+            TestNotNull("Class must exist", Class);
+
+            bool bIsBlueprintable = Class->HasAnyClassFlags(EClassFlags::CLASS_CompiledFromBlueprint) || Class->GetBoolMetaData(TEXT("IsBlueprintBase"));
+
+            TestTrue(TEXT("Class should be Blueprintable"), bIsBlueprintable);
+
+            // Verifica si la clase está permitida como tipo de variable en Blueprints
+            bool bIsBlueprintType = UEdGraphSchema_K2::IsAllowableBlueprintVariableType(Class);
+
+            TestTrue(TEXT("Class should be BlueprintType"), bIsBlueprintType);
+
+
+        });
+
+        It("Should have editable and blueprint-accessible variables", [this]()
+        {
+            UClass* Class = ADamageZone::StaticClass();
+
+            // 1. Validar la propiedad DamageValue
+            FProperty* DamageProp = Class->FindPropertyByName(TEXT("DamageValue"));
+            TestNotNull("DamageValue property must exist via reflection", DamageProp);
+            if (DamageProp)
+            {
+                TestTrue("DamageValue must be editable in editor (EditAnywhere)", 
+                    DamageProp->HasAnyPropertyFlags(CPF_Edit));
+                TestTrue("DamageValue must be accessible in Blueprints (BlueprintReadWrite)", 
+                    DamageProp->HasAnyPropertyFlags(CPF_BlueprintVisible));
+            }
+
+            // 2. Validar la propiedad TimeDamageValue
+            FProperty* TimeProp = Class->FindPropertyByName(TEXT("TimeDamageValue"));
+            TestNotNull("TimeDamageValue property must exist via reflection", TimeProp);
+            if (TimeProp)
+            {
+                TestTrue("TimeDamageValue must be editable in editor", 
+                    TimeProp->HasAnyPropertyFlags(CPF_Edit));
+                TestTrue("TimeDamageValue must be accessible in Blueprints", 
+                    TimeProp->HasAnyPropertyFlags(CPF_BlueprintVisible));
+            }
+        });
+    });
 }

@@ -18,8 +18,10 @@ public class TDDProyect : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
-			"Slate"
-		});
+			"Slate",
+            "BlueprintGraph",
+            "UnrealEd"
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
