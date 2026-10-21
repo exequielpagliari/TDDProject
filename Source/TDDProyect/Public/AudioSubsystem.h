@@ -19,6 +19,7 @@ public:
 	float GetMusicVolume() const;
 	void SetSFXVolume(float Volume);
 	float GetSFXVolume() const;
+	void ApplySettings(class UTDDProjectGameUserSettings* UserSettings);
 private:
 	float MusicVolume;
 	float SFXVolume;

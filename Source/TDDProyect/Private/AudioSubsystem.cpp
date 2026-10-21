@@ -2,6 +2,7 @@
 
 
 #include "AudioSubsystem.h"
+#include "TDDProjectGameUserSettings.h"
 
 UAudioSubsystem::UAudioSubsystem()
 {
@@ -9,18 +10,29 @@ UAudioSubsystem::UAudioSubsystem()
 
 void UAudioSubsystem::SetMusicVolume(float Volume)
 {
+	MusicVolume = FMath::Clamp(Volume, 0.0f, 1.0f);
 }
 
 float UAudioSubsystem::GetMusicVolume() const
 {
-	return 0.0f;
+	return MusicVolume;
 }
 
 void UAudioSubsystem::SetSFXVolume(float Volume)
 {
+	SFXVolume = FMath::Clamp(Volume, 0.0f, 1.0f);
 }
 
 float UAudioSubsystem::GetSFXVolume() const
 {
-	return 0.0f;
+	return SFXVolume;
+}
+
+void UAudioSubsystem::ApplySettings(UTDDProjectGameUserSettings* UserSettings)
+{
+	if (UserSettings)
+	{
+		SetMusicVolume(UserSettings->MusicVolume);
+		SetSFXVolume(UserSettings->SFXVolume);
+	}
 }

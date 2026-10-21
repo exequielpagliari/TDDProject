@@ -15,7 +15,7 @@
 #include "EdGraphSchema_K2.h"
 
 // Definimos el spec del actor test
-BEGIN_DEFINE_SPEC(FDamageZoneSpec, "TDDProyect.Actors.DamageZone", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::EditorContext | EAutomationTestFlags::ClientContext)
+BEGIN_DEFINE_SPEC(FDamageZoneSpec, "TDDProject.Actors.DamageZone", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::EditorContext | EAutomationTestFlags::ClientContext)
 UWorld* TestWorld;
 ADamageZone* DamageZone;
 END_DEFINE_SPEC(FDamageZoneSpec)

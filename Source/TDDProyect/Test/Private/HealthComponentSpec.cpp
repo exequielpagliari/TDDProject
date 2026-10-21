@@ -4,7 +4,7 @@
 #include "HealthComponent.h"
 #include "GameFramework/Actor.h"
 
-BEGIN_DEFINE_SPEC(FHealthComponentSpec, "Proyecto.Components.HealthComponent", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::EditorContext | EAutomationTestFlags::ClientContext)
+BEGIN_DEFINE_SPEC(FHealthComponentSpec, "TDDProject.Components.HealthComponent", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::EditorContext | EAutomationTestFlags::ClientContext)
 AActor* TestActor;
 UHealthComponent* HealthComp;
 END_DEFINE_SPEC(FHealthComponentSpec)
